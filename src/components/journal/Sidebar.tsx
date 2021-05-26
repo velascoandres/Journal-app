@@ -1,4 +1,5 @@
 import React from 'react'
+import { JournalEntries } from './JournalEntries';
 
 export const Sidebar: React.FC = () => {
     return (
@@ -20,6 +21,9 @@ export const Sidebar: React.FC = () => {
                     New entry
                 </p>
             </div>
+
+            <JournalEntries />
+
         </aside>
     )
 };
