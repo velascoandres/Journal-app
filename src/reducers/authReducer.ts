@@ -16,7 +16,7 @@ export enum AuthActionTypes {
 
 export interface ILoginPayload {
     name: string;
-    uuid: string;
+    uid: string;
 }
 
 export interface IAuthLoginAction extends IBasicAction<AuthActionTypes.login> {
