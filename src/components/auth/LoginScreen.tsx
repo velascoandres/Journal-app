@@ -50,6 +50,7 @@ export const LoginScreen: React.FC = () => {
 
 				<Link
 					to="/auth/register"
+					className="link"
 				>
 					Create new account
 				</Link>
