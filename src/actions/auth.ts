@@ -1,4 +1,6 @@
 import { Dispatch } from 'react';
+import { firebase, googleAuthProvider } from '../firebase/firebase-config';
+
 import { AuthActionTypes, IAuthLoginAction } from "../reducers/authReducer";
 
 
@@ -10,6 +12,25 @@ export const startLoginEmailPassword = (email: string, password: string) => {
             );
         }, 3500);
     }
+};
+
+
+export const startGoogleLogin = () => {
+    return (dispatch: Dispatch<any>) => {
+        firebase
+            .auth()
+            .signInWithPopup(googleAuthProvider)
+            .then(
+                ({user}: firebase.auth.UserCredential) => {
+                    dispatch(
+                        makeLoginAction(
+                            user!.uid,
+                            user?.displayName as string,
+                        ),
+                    );
+                }
+            );
+    };
 };
 
 
