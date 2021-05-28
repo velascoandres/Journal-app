@@ -1,6 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import validator from 'validator';
+
+
 import { useForm } from '../../hooks/userForm';
+
 
 type RegisterFormValues = {
     name: string;
@@ -19,18 +23,31 @@ const initialRegisterForm: RegisterFormValues = {
 
 
 export const RegisterScreen: React.FC = () => {
-    
+
     const [formValues, handleInput] = useForm<RegisterFormValues>(initialRegisterForm)
-    
+    const { email, name, password, password2 } = formValues;
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        if (isFormValid()) {
+
+        }
         console.log(formValues);
     };
 
-    const validateForm = () => {
+
+    const isFormValid = (): boolean => {
         // TODO: implement
+        if (validator.isEmpty(name)) {
+            return false;
+        } else if (!validator.isEmail(email)) {
+            return false;
+        } else if (password !== password2 || password.length <= 5) {
+            return false;
+        }
+        return true;
     };
-    
+
     return (
         <>
             <h3 className="auth__title" >Register Screen</h3>
@@ -45,6 +62,11 @@ export const RegisterScreen: React.FC = () => {
                     onChange={handleInput}
                     autoComplete="off"
                 />
+
+                <div className="auth__alert-error">
+                    Hola mundo
+                </div>
+
                 <input
                     type="text"
                     placeholder="Email"
