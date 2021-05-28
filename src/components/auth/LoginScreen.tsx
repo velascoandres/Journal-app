@@ -1,9 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {useDispatch} from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import validator from 'validator';
 
 import { startGoogleLogin, startLoginEmailPassword } from '../../actions/auth';
 import { useForm } from '../../hooks/userForm';
+import { removeError, setError } from '../../actions/ui';
+import { UIState } from '../../reducers/uiReducer';
+import { AuthState } from '../../reducers/authReducer';
 
 type LoginFormValues = {
 	email: string;
@@ -24,21 +28,49 @@ export const LoginScreen: React.FC = () => {
 
 	const { email, password } = formValues;
 
+	const { msgError, loading } = useSelector<{ ui: UIState, auth: AuthState }, UIState>(
+		({ ui }) => ui,
+	);
+
 	const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
 		// Do dispatch
-		const loginAction = startLoginEmailPassword(email, password);
-		dispatch(loginAction);
+		if (isFormValid()) {
+			const loginAction = startLoginEmailPassword(email, password);
+			dispatch(loginAction);
+		}
 	};
 
 	const handleGoogleLogin = () => {
-		console.log('AQUI');
 		dispatch(startGoogleLogin());
 	};
+
+
+	const isFormValid = (): boolean => {
+		if (!validator.isEmail(email)) {
+			dispatch(setError('Email invalido'));
+			return false;
+		} else if (validator.isEmpty(password)) {
+			dispatch(setError('Password incorrecta'));
+			return false;
+		}
+		dispatch(removeError());
+		return true;
+	}
 
 	return (
 		<>
 			<h3 className="auth__title" >Login Screen</h3>
+
+			{
+				msgError &&
+
+				<div className="auth__alert auth__alert__error">
+					{msgError}
+				</div>
+
+			}
+
 			<form onSubmit={handleLogin}>
 				<input
 					type="text"
@@ -61,6 +93,7 @@ export const LoginScreen: React.FC = () => {
 				<button
 					className="btn btn-primary btn-block"
 					type="submit"
+					disabled={loading}
 				>
 					Login
 				</button>
@@ -70,7 +103,7 @@ export const LoginScreen: React.FC = () => {
 				<div className="auth__social-networks">
 					<p>Login with social networks</p>
 
-					<div 
+					<div
 						className="google-btn"
 						onClick={handleGoogleLogin}
 					>

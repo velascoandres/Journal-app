@@ -10,16 +10,26 @@ export type UIState = {
 export enum UIActionsTypes {
     uiSetError = '[UI] Set Error',
     uiRemoveError = '[UI] Remove Error',
+    uiStartLoading = '[UI] Start loading',
+    uiFinishLoading = '[UI] Finish loading'
 }
 
 export interface IUISetErrorAction extends IBasicAction<UIActionsTypes> {
-    type: UIActionsTypes.uiSetError,
+    type: UIActionsTypes.uiSetError;
     payload: string;
 }
 
 
 export interface IUIRemoveErrorAction extends IBasicAction<UIActionsTypes> {
-    type: UIActionsTypes.uiRemoveError,
+    type: UIActionsTypes.uiRemoveError;
+}
+
+export interface IUIStartLoadinAction extends IBasicAction<UIActionsTypes> {
+    type: UIActionsTypes.uiStartLoading;
+}
+
+export interface IUIFinishLoadinAction extends IBasicAction<UIActionsTypes> {
+    type: UIActionsTypes.uiFinishLoading;
 }
 
 
@@ -38,15 +48,27 @@ export const uiReducer: Reducer<UIState, IBasicAction<UIActionsTypes>> = (state:
                 msgError: action.payload,
                 loading: false,
             };
-            case UIActionsTypes.uiRemoveError:
-                return {
-                    ...state,
-                    msgError: null,
-                    loading: false,
-                };
-            default:
-                return {
-                    ...state,
-                };
+        case UIActionsTypes.uiRemoveError:
+            return {
+                ...state,
+                msgError: null,
+                loading: false,
+            };
+        case UIActionsTypes.uiStartLoading:
+            return {
+                ...state,
+                loading: true,
+            };
+
+        case UIActionsTypes.uiFinishLoading:
+            return {
+                ...state,
+                loading: false,
+            };
+
+        default:
+            return {
+                ...state,
+            };
     }
 };

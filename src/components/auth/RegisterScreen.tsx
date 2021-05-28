@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import validator from 'validator';
+import { startRegisterWithEmailPasswordName } from '../../actions/auth';
 import { removeError, setError } from '../../actions/ui';
 
 
@@ -33,21 +34,19 @@ export const RegisterScreen: React.FC = () => {
 
     const dispatch = useDispatch();
 
-    const { msgError } = useSelector<{ ui: UIState, auth: AuthState }, UIState>(
+    const { msgError, loading } = useSelector<{ ui: UIState, auth: AuthState }, UIState>(
         ({ ui }) => ui,
     );
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (isFormValid()) {
-            // TODO registrar usuario
-            console.log(formValues);
+           dispatch(startRegisterWithEmailPasswordName(email, password, name));
         }
     };
 
 
     const isFormValid = (): boolean => {
-        // TODO: implement
         if (validator.isEmpty(name)) {
             dispatch(setError('El nombre es requerido'));
             return false;
@@ -112,6 +111,7 @@ export const RegisterScreen: React.FC = () => {
                 <button
                     className="btn btn-primary btn-block mb-5"
                     type="submit"
+                    disabled={loading}
                 >
                     Register
                 </button>
