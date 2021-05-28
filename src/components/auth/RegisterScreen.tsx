@@ -1,9 +1,13 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import validator from 'validator';
+import { removeError, setError } from '../../actions/ui';
 
 
 import { useForm } from '../../hooks/userForm';
+import { AuthState } from '../../reducers/authReducer';
+import { UIState } from '../../reducers/uiReducer';
 
 
 type RegisterFormValues = {
@@ -27,24 +31,34 @@ export const RegisterScreen: React.FC = () => {
     const [formValues, handleInput] = useForm<RegisterFormValues>(initialRegisterForm)
     const { email, name, password, password2 } = formValues;
 
+    const dispatch = useDispatch();
+
+    const { msgError } = useSelector<{ ui: UIState, auth: AuthState }, UIState>(
+        ({ ui }) => ui,
+    );
+
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (isFormValid()) {
-
+            // TODO registrar usuario
+            console.log(formValues);
         }
-        console.log(formValues);
     };
 
 
     const isFormValid = (): boolean => {
         // TODO: implement
         if (validator.isEmpty(name)) {
+            dispatch(setError('El nombre es requerido'));
             return false;
         } else if (!validator.isEmail(email)) {
+            dispatch(setError('Email invalido'));
             return false;
         } else if (password !== password2 || password.length <= 5) {
+            dispatch(setError('Password incorrecta'));
             return false;
         }
+        dispatch(removeError());
         return true;
     };
 
@@ -54,6 +68,15 @@ export const RegisterScreen: React.FC = () => {
             <form
                 onSubmit={handleSubmit}
             >
+                {
+                    msgError &&
+
+                    <div className="auth__alert auth__alert__error">
+                        {msgError}
+                    </div>
+
+                }
+
                 <input
                     type="text"
                     placeholder="Name"
@@ -62,10 +85,6 @@ export const RegisterScreen: React.FC = () => {
                     onChange={handleInput}
                     autoComplete="off"
                 />
-
-                <div className="auth__alert-error">
-                    Hola mundo
-                </div>
 
                 <input
                     type="text"

@@ -57,12 +57,24 @@
     width: 100%;
 }
 
-.auth__alert-error {
-    background-color: red;
+
+.auth__alert {
     border-radius: 5px;
     color: white;
     display: flex;
     justify-content: center;
     margin-bottom: 10px;
     padding: 5px;
+
+}
+
+
+.auth__alert__error {
+    background-color: red;
+    color: white;
+}
+
+.auth__alert__success {
+    background-color: green;
+    color: white;
 }

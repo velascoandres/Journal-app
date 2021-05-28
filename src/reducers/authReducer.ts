@@ -1,5 +1,5 @@
 import { Reducer } from 'react';
-import { IBasicAction } from './interfaces/basic.action.interface';
+import { IBasicAction } from './interfaces/basic-action.interface';
 
 export type AuthState = {
     uid: string;
