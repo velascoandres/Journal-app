@@ -1,6 +1,8 @@
 import { Dispatch } from 'react';
-import { firebase, googleAuthProvider } from '../firebase/firebase-config';
+import Swal from 'sweetalert2'
 
+
+import { firebase, googleAuthProvider } from '../firebase/firebase-config';
 import { AuthActionTypes, IAuthLoginAction, IAuthLogoutAction } from '../reducers/authReducer';
 import { finishLoading, startLoading } from './ui';
 
@@ -24,7 +26,7 @@ export const startLoginEmailPassword = (email: string, password: string) => {
             .catch(
                 error => {
                     dispatch(finishLoading());
-                    console.error(error);
+                    Swal.fire('Error', error.message, 'error');
                 }
             );
     };
@@ -55,9 +57,9 @@ export const startRegisterWithEmailPasswordName = (
                 },
             )
             .catch(
-                e => {
+                error => {
                     dispatch(finishLoading());
-                    console.error(e);
+                    Swal.fire('Error', error.message, 'error');
                 }
             );
     }
@@ -84,6 +86,7 @@ export const startGoogleLogin = () => {
             .catch(
                 error => {
                     console.error(error);
+                    Swal.fire('Error', error.message, 'error');
                     dispatch(finishLoading());
                 }
             )
@@ -113,7 +116,9 @@ export const startLogout = () => {
                 },
             )
             .catch(
-                error => console.error(error),  
+                error => {
+                    Swal.fire('Error', error.message, 'error');
+                },  
             );
     }
 };

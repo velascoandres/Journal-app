@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
     BrowserRouter as Router,
     Switch,
-    Route, Redirect,
+    Redirect,
 } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
