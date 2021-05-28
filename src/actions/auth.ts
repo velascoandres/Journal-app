@@ -1,7 +1,7 @@
 import { Dispatch } from 'react';
 import { firebase, googleAuthProvider } from '../firebase/firebase-config';
 
-import { AuthActionTypes, IAuthLoginAction } from '../reducers/authReducer';
+import { AuthActionTypes, IAuthLoginAction, IAuthLogoutAction } from '../reducers/authReducer';
 import { finishLoading, startLoading } from './ui';
 
 
@@ -36,7 +36,7 @@ export const startRegisterWithEmailPasswordName = (
     password: string,
     name: string,
 ) => {
-
+    
     return (dispatch: Dispatch<any>) => {
         dispatch(startLoading());
         firebase
@@ -52,7 +52,7 @@ export const startRegisterWithEmailPasswordName = (
                         ),
                     );
                     dispatch(finishLoading());
-                }
+                },
             )
             .catch(
                 e => {
@@ -91,12 +91,36 @@ export const startGoogleLogin = () => {
 };
 
 
-const makeLoginAction = (uid: string, name: string): IAuthLoginAction => (
+export const makeLoginAction = (uid: string, name: string): IAuthLoginAction => (
     {
         type: AuthActionTypes.login,
         payload: {
             name,
             uid,
         }
+    }
+);
+
+
+export const startLogout = () => {
+    return (dispatch: Dispatch<any>) => {
+        firebase
+            .auth()
+            .signOut()
+            .then(
+                () => {
+                    dispatch(logout());
+                },
+            )
+            .catch(
+                error => console.error(error),  
+            );
+    }
+};
+
+
+export const logout = (): IAuthLogoutAction => (
+    {
+        type: AuthActionTypes.logout,
     }
 );
