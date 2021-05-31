@@ -1,13 +1,18 @@
+import { UIState } from './../reducers/uiReducer';
+import { AuthState } from './../reducers/authReducer';
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
-import { authReducer } from '../reducers/authReducer';
-import { uiReducer } from '../reducers/uiReducer';
 import thunk from 'redux-thunk';
 
+
+import { authReducer } from '../reducers/authReducer';
+import { uiReducer } from '../reducers/uiReducer';
+import { notesReducer, NotesState } from '../reducers/notesReducer';
 
 const reducers = combineReducers(
   {
     auth: authReducer,
     ui: uiReducer,
+    notes: notesReducer,
   }
 );
 
@@ -26,3 +31,8 @@ export const store = createStore(
   ),
 );
 
+export interface IStore {
+  auth: AuthState,
+  ui: UIState,
+  notes: NotesState,
+}

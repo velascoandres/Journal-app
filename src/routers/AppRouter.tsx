@@ -42,7 +42,7 @@ export const AppRouter = () => {
     if (checking) {
         return (
             <div>
-                Espere....
+                Wait....
             </div>
         );
     }

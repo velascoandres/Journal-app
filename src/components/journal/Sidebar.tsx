@@ -1,12 +1,18 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { startLogout } from '../../actions/auth';
+import { AuthState } from '../../reducers/authReducer';
+import { UIState } from '../../reducers/uiReducer';
 import { JournalEntries } from './JournalEntries';
 
 export const Sidebar: React.FC = () => {
 
     const dispatch = useDispatch();
+
+    const { name } = useSelector<{ ui: UIState, auth: AuthState }, AuthState>(
+        (state) => state.auth
+    );
 
     const handleLogout = () => {
         dispatch(startLogout());
@@ -18,10 +24,10 @@ export const Sidebar: React.FC = () => {
             <div className="journal__sidebar-navbar">
                 <h3 className="mt-5">
                     <i className="far fa-moon"></i>
-                    <span> Andrés</span>
+                    <span> {name} </span>
                 </h3>
 
-                <button 
+                <button
                     className="btn"
                     onClick={handleLogout}
                 >
