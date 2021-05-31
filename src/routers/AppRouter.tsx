@@ -12,8 +12,9 @@ import { firebase } from '../firebase/firebase-config';
 import { makeLoginAction } from '../actions/auth';
 import { PublicRoute } from './PublicRoute';
 import { PrivateRoute } from './PrivateRoute';
+import { startLoadNotes } from '../actions/notes';
 
-export const AppRouter = () => {
+export const AppRouter: React.FC = () => {
 
     const dispatch = useDispatch();
 
@@ -30,6 +31,9 @@ export const AppRouter = () => {
                     if (user !== null && user?.uid) {
                         dispatch(makeLoginAction(user.uid, user.displayName ?? ''));
                         setIsLoggedIn(true);
+                        
+                        dispatch(startLoadNotes());
+                    
                     } else {
                         setIsLoggedIn(false);
                     }
