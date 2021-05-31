@@ -2,7 +2,6 @@ import { IAuthRegisterAction } from './authReducer';
 import { Reducer } from 'react';
 import { IBasicAction } from './interfaces/basic-action.interface';
 export interface INote {
-    id: string;
     title: string;
     body: string;
     imageUrl: string;
@@ -30,15 +29,27 @@ export enum NotesActionTypes {
 }
 
 
-export interface ISelectNote extends IBasicAction<NotesActionTypes> {
-    type: NotesActionTypes.setActiveNote,
+export interface ISelectNoteAction extends IBasicAction<NotesActionTypes> {
+    type: NotesActionTypes.setActiveNote;
+    payload: { id: string } & INote;
 }
 
 
 
 export const notesReducer: Reducer<NotesState, IBasicAction<NotesActionTypes>> = (state: NotesState = initialNoteState, action) => {
 
-    return initialNoteState;
-
+    switch (action.type) {
+        case NotesActionTypes.setActiveNote:
+            return {
+                ...state,
+                active: {
+                    ...action.payload,
+                },
+            };
+        default:
+            return {
+                ...initialNoteState,
+            }
+    };
 
 }
