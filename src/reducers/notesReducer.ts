@@ -22,7 +22,7 @@ const initialNoteState: NotesState = {
 export enum NotesActionTypes {
     setActiveNote = '[Notes] Set Active Note',
     addNewNote = '[Notes] Add new note',
-    loadNote = '[Notes] load notes',
+    loadNotes = '[Notes] load notes',
     updateNote = '[Notes] update note',
     deleteNote = '[Notes] delete note',
     cleanNotes = '[Notes] Clean notes logout',
