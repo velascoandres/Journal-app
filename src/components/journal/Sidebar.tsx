@@ -2,6 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 
 import { startLogout } from '../../actions/auth';
+import { startNewNote } from '../../actions/notes';
 import { AuthState } from '../../reducers/authReducer';
 import { UIState } from '../../reducers/uiReducer';
 import { JournalEntries } from './JournalEntries';
@@ -16,6 +17,10 @@ export const Sidebar: React.FC = () => {
 
     const handleLogout = () => {
         dispatch(startLogout());
+    };
+
+    const handleAddNewEntry = () => {
+        dispatch(startNewNote());
     };
 
 
@@ -35,7 +40,10 @@ export const Sidebar: React.FC = () => {
                 </button>
             </div>
 
-            <div className="journal__new-entry">
+            <div 
+                className="journal__new-entry"
+                onClick={handleAddNewEntry}
+            >
                 <i className="far fa-calendar-plus fa-5x"></i>
                 <p className="mt-5">
                     New entry

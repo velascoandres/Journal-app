@@ -31,8 +31,5 @@ export const store = createStore(
   ),
 );
 
-export interface IStore {
-  auth: AuthState,
-  ui: UIState,
-  notes: NotesState,
-}
+
+export type RootState = ReturnType<typeof store.getState>
