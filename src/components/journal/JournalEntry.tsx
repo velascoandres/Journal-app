@@ -1,31 +1,40 @@
 import React from 'react'
+import { INote } from '../../reducers/notesReducer';
+import moment from 'moment';
 
-export const JournalEntry: React.FC = () => {
+
+export const JournalEntry: React.FC<INote> = ({ title, body, date, imageUrl }: INote) => {
+
+
+    const defaultUrl = 'https://guimsa.com/img/demopage/image-3.jpg';
+
+    const noteDate = moment(date);
+
     return (
         <div className="journal__entry pointer">
-            <div 
+            <div
                 className="journal__entry-picture"
                 style={
                     {
                         WebkitBackgroundSize: 'cover',
-                        backgroundImage: 'url(https://guimsa.com/img/demopage/image-3.jpg)'
+                        backgroundImage: `url(${imageUrl || defaultUrl})`,
                     }
-                }    
+                }
             >
             </div>
 
             <div className="journal__entry-body">
                 <p className="journal__entry-title">
-                    Un nuevo día
+                    {title}
                 </p>
                 <p className="journal__entry-content">
-                    Proident ipsum magna labore culpa exercitation mollit laboris Lorem id adipisicing sunt consectetur occaecat.
+                    {body}
                 </p>
             </div>
 
             <div className="journal__entry-date-box">
-                <span>Monday</span>
-                <h4>28</h4>
+                <span>{noteDate.format('dddd')}</span>
+                <h4>{noteDate.format('Do')}</h4>
             </div>
         </div>
     );
