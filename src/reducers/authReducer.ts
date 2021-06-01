@@ -54,8 +54,7 @@ export const authReducer: Reducer<AuthState, IBasicAction<AuthActionTypes>> = (s
             break;
     }
     return {
-        name: '',
-        uid: '',
+        ...state,
     };
 
 }

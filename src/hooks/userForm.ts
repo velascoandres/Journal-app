@@ -1,14 +1,14 @@
 import { useState } from 'react';
 
-export type ChangeInputCallback = (e: React.ChangeEvent<HTMLInputElement>) => void;
-export type SubmitCallback = (e: React.FormEvent<HTMLFormElement>) => void;
-export type UseForm = <T>(initial: T) => [T, ChangeInputCallback, SubmitCallback];
+export type ChangeInputCallback = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement >) => void;
+export type ResetCallback<T> = (newValue: T) => void;
+export type UseForm = <T>(initial: T) => [T, ChangeInputCallback, ResetCallback<T>];
 
 
 export const useForm: UseForm = <T>(initial: T) => {
     const [formState, setFormState] = useState<T>(initial);
 
-    const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const onChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement  >) => {
 
         setFormState({
             ...formState,
@@ -16,10 +16,9 @@ export const useForm: UseForm = <T>(initial: T) => {
         });
     };
 
-    const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault();
-        // TODO: filter logic
-    };
+    const reset = (newValue: T = initial): void => {
+        setFormState(newValue);
+    }
 
-    return [formState, onChange, handleSubmit];
+    return [formState, onChange, reset];
 };

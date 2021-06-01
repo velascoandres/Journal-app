@@ -58,6 +58,9 @@
     &:hover{
         background-color: $google-blue;
         color: white;
+    }
+    &:active{
+        transform: scale(1.1, 1.1);
     }    
 }
 

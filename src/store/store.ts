@@ -1,12 +1,10 @@
-import { UIState } from './../reducers/uiReducer';
-import { AuthState } from './../reducers/authReducer';
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
 
 import { authReducer } from '../reducers/authReducer';
 import { uiReducer } from '../reducers/uiReducer';
-import { notesReducer, NotesState } from '../reducers/notesReducer';
+import { notesReducer } from '../reducers/notesReducer';
 
 const reducers = combineReducers(
   {

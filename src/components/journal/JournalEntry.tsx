@@ -1,17 +1,29 @@
 import React from 'react'
 import { INote } from '../../reducers/notesReducer';
 import moment from 'moment';
+import { useAppDispatch } from '../../hooks/selectors';
+import { activeNote } from '../../actions/notes';
 
 
-export const JournalEntry: React.FC<INote> = ({ title, body, date, imageUrl }: INote) => {
+export const JournalEntry: React.FC<INote> = ({ id, title, body, date, imageUrl }: INote) => {
 
 
     const defaultUrl = 'https://guimsa.com/img/demopage/image-3.jpg';
 
     const noteDate = moment(date);
 
+    const dispatch = useAppDispatch();
+
+
+    const handleSelect = () => {
+        dispatch(activeNote(id as string, {title, body, date, imageUrl}));
+    };
+
     return (
-        <div className="journal__entry pointer">
+        <div 
+            className="journal__entry pointer"
+            onClick={handleSelect}
+        >
             <div
                 className="journal__entry-picture"
                 style={

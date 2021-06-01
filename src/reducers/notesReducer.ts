@@ -1,4 +1,3 @@
-import { IAuthRegisterAction } from './authReducer';
 import { Reducer } from 'react';
 import { IBasicAction } from './interfaces/basic-action.interface';
 export interface INote {
@@ -42,7 +41,7 @@ export interface ISetNotesAction extends IBasicAction<NotesActionTypes> {
 
 
 
-export const notesReducer: Reducer<NotesState, IBasicAction<NotesActionTypes>> = (state: NotesState = initialNoteState, action) => {
+export const notesReducer: Reducer<NotesState, IBasicAction<NotesActionTypes>> = (state: NotesState = initialNoteState, action: IBasicAction<NotesActionTypes>): NotesState => {
 
     switch (action.type) {
         case NotesActionTypes.setActiveNote:
@@ -59,9 +58,10 @@ export const notesReducer: Reducer<NotesState, IBasicAction<NotesActionTypes>> =
                 notes: action.payload,
             };
         default:
-            return {
-                ...initialNoteState,
-            }
+            break;
+    };
+    return {
+        ...state,
     };
 
 }

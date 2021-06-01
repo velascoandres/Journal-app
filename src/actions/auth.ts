@@ -38,7 +38,7 @@ export const startRegisterWithEmailPasswordName = (
     password: string,
     name: string,
 ) => {
-    
+
     return (dispatch: Dispatch<any>) => {
         dispatch(startLoading());
         firebase
@@ -118,7 +118,7 @@ export const startLogout = () => {
             .catch(
                 error => {
                     Swal.fire('Error', error.message, 'error');
-                },  
+                },
             );
     }
 };

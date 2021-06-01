@@ -27,13 +27,11 @@ export const AppRouter: React.FC = () => {
         firebase
             .auth()
             .onAuthStateChanged(
-                (user: firebase.User | null) => {
-                    if (user !== null && user?.uid) {
+                async (user: firebase.User | null) => {
+                    if (user?.uid) {
                         dispatch(makeLoginAction(user.uid, user.displayName ?? ''));
                         setIsLoggedIn(true);
-                        
                         dispatch(startLoadNotes());
-                    
                     } else {
                         setIsLoggedIn(false);
                     }
@@ -71,7 +69,7 @@ export const AppRouter: React.FC = () => {
                             component={JournalScreen}
                         />
 
-                        <Redirect 
+                        <Redirect
                             to="/auth/login"
                         />
 

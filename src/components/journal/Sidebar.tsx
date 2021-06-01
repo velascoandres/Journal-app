@@ -1,17 +1,17 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import { startLogout } from '../../actions/auth';
 import { startNewNote } from '../../actions/notes';
+import { useAppSelector } from '../../hooks/selectors';
 import { AuthState } from '../../reducers/authReducer';
-import { UIState } from '../../reducers/uiReducer';
 import { JournalEntries } from './JournalEntries';
 
 export const Sidebar: React.FC = () => {
 
     const dispatch = useDispatch();
 
-    const { name } = useSelector<{ ui: UIState, auth: AuthState }, AuthState>(
+    const { name } = useAppSelector<AuthState>(
         (state) => state.auth
     );
 

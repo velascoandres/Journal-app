@@ -8,7 +8,7 @@ import { Sidebar } from './Sidebar';
 
 export const JournalScreen: React.FC = () => {
 
-    const { active, notes } = useSelector<RootState, NotesState>(state => state.notes);
+    const { active } = useSelector<RootState, NotesState>(state => state.notes);
 
 
 
