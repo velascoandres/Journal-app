@@ -4,8 +4,8 @@ export interface INote {
     id?: string;
     title: string;
     body: string;
-    imageUrl: string;
-    date: number;
+    imageUrl?: string;
+    date?: number;
 }
 
 
@@ -39,7 +39,13 @@ export interface ISetNotesAction extends IBasicAction<NotesActionTypes> {
     payload: INote[];
 }
 
-
+export interface IUpdateNoteAction extends IBasicAction<NotesActionTypes> {
+    type: NotesActionTypes.updateNote;
+    payload: {
+        id: string;
+        note: INote;
+    };
+}
 
 export const notesReducer: Reducer<NotesState, IBasicAction<NotesActionTypes>> = (state: NotesState = initialNoteState, action: IBasicAction<NotesActionTypes>): NotesState => {
 
@@ -57,6 +63,23 @@ export const notesReducer: Reducer<NotesState, IBasicAction<NotesActionTypes>> =
                 ...state,
                 notes: action.payload,
             };
+
+        case NotesActionTypes.updateNote:
+
+            const { notes } = state;
+            const { id, note } = (action as IUpdateNoteAction).payload;
+
+            const updatedNotes = notes.map(
+                (currentNote: INote) => {
+                    return currentNote.id === id ? note : currentNote;
+                },
+            );
+
+            return {
+                ...state,
+                notes: updatedNotes,
+            };
+
         default:
             break;
     };

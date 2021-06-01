@@ -1,19 +1,42 @@
-import React from 'react'
+import React from 'react';
+import { useDispatch } from 'react-redux';
+import { startSaveNote } from '../../actions/notes';
+import { useAppSelector } from '../../hooks/selectors';
+import { INote, NotesState } from '../../reducers/notesReducer';
+
+import moment from 'moment';
 
 export const NotesAppBar: React.FC = () => {
+
+    const dispatch = useDispatch();
+
+    const { active: note } = useAppSelector<NotesState>(state => state.notes);
+
+    const handleSave = () => {
+
+        dispatch(startSaveNote(note as INote));
+
+    };
+
+
     return (
         <div className="notes__appbar">
-            <span>28 de agosto 2020</span>
+            <span>{moment(new Date()).format('LL')}</span>
 
             <div>
-                <button className="btn">
+                <button
+                    className="btn"
+                >
                     Picture
                 </button>
-                <button className="btn">
+                <button
+                    onClick={handleSave}
+                    className="btn"
+                >
                     Save
                 </button>
             </div>
-        
+
         </div>
-    )
+    );
 }

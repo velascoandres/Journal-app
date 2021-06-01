@@ -1,4 +1,5 @@
-import { ISetNotesAction } from './../reducers/notesReducer';
+import Swal from 'sweetalert2';
+import { ISetNotesAction, IUpdateNoteAction } from './../reducers/notesReducer';
 import { Dispatch } from 'react';
 import { ThunkAction } from 'redux-thunk';
 import { INote, ISelectNoteAction, NotesActionTypes } from '../reducers/notesReducer';
@@ -60,3 +61,39 @@ export const startLoadNotes = (): ThunkAction<void, RootState, unknown, ISetNote
         dispatch(setNotes(notes));
     };
 }
+
+
+export const startSaveNote = (note: INote) => {
+    return async (dispatch: Dispatch<any>, getState: () => RootState) => {
+
+        const { uid } = getState().auth;
+
+        if (!note.imageUrl) {
+            delete note.imageUrl;
+        }
+
+        const noteToFirestore = { ...note };
+
+        delete noteToFirestore.id;
+
+        await db
+            .doc(`${uid}/journal/notes/${note.id}`)
+            .update(noteToFirestore);
+
+        dispatch(refreshNote(note.id as string, note));
+
+        Swal.fire('Saved', note.title, 'success');
+
+    };
+}
+
+
+export const refreshNote = (id: string, note: INote): IUpdateNoteAction => (
+    {
+        type: NotesActionTypes.updateNote,
+        payload: {
+            id,
+            note,
+        },
+    }
+)

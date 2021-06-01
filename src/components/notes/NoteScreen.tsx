@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
-import { useAppSelector } from '../../hooks/selectors';
+import { activeNote } from '../../actions/notes';
+import { useAppDispatch, useAppSelector } from '../../hooks/selectors';
 import { useForm } from '../../hooks/userForm';
 import { INote, NotesState } from '../../reducers/notesReducer';
 import { NotesAppBar } from './NotesAppBar'
@@ -8,26 +9,35 @@ export const NoteScreen: React.FC = () => {
 
     const { active: note } = useAppSelector<NotesState>(state => state.notes);
 
-    const [formValues, handleInputChanges, reset] = useForm<Pick<INote, 'body' | 'title'>>(
-        {
-            body: note?.body || '',
-            title: note?.title || '',
-        },
+    const dispatch = useAppDispatch();
+
+    const [formValues, handleInputChanges, reset] = useForm<INote>(
+        note as INote,
     );
 
     const { title, body } = formValues;
 
-    
+
     const activeId = useRef(note?.id);
 
 
     useEffect(() => {
-        if (note && note.id !== activeId.current){
+        if (note && note.id !== activeId.current) {
             reset(note);
             // para evitar el ciclo infinito
             activeId.current = note.id;
         }
     }, [note, reset]);
+
+
+    useEffect(() => {
+        if (formValues) {
+        }
+        dispatch(activeNote(formValues.id as string, { ...formValues }));
+
+    }, [formValues, dispatch]);
+
+
 
     return (
         <div className="notes__main-content">

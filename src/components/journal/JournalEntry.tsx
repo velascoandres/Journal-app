@@ -8,32 +8,34 @@ import { activeNote } from '../../actions/notes';
 export const JournalEntry: React.FC<INote> = ({ id, title, body, date, imageUrl }: INote) => {
 
 
-    const defaultUrl = 'https://guimsa.com/img/demopage/image-3.jpg';
-
     const noteDate = moment(date);
 
     const dispatch = useAppDispatch();
 
 
     const handleSelect = () => {
-        dispatch(activeNote(id as string, {title, body, date, imageUrl}));
+        dispatch(activeNote(id as string, { title, body, date, imageUrl }));
     };
 
     return (
-        <div 
+        <div
             className="journal__entry pointer"
             onClick={handleSelect}
         >
-            <div
-                className="journal__entry-picture"
-                style={
-                    {
-                        WebkitBackgroundSize: 'cover',
-                        backgroundImage: `url(${imageUrl || defaultUrl})`,
+            {
+                imageUrl &&
+                <div
+                    className="journal__entry-picture"
+                    style={
+                        {
+                            WebkitBackgroundSize: 'cover',
+                            backgroundImage: `url(${imageUrl})`,
+                        }
                     }
-                }
-            >
-            </div>
+                >
+                </div>
+            }
+
 
             <div className="journal__entry-body">
                 <p className="journal__entry-title">
