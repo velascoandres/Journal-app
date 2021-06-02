@@ -3,7 +3,7 @@ import { Dispatch } from 'react';
 import { ThunkAction } from 'redux-thunk';
 import Swal from 'sweetalert2';
 
-import { ICreateNoteAction, ISetNotesAction, IUpdateNoteAction } from './../reducers/notesReducer';
+import { ICreateNoteAction, ISetNotesAction, IUpdateNoteAction, IDeleteNoteAction } from './../reducers/notesReducer';
 import { INote, ISelectNoteAction, NotesActionTypes } from '../reducers/notesReducer';
 import { RootState } from '../store/store';
 import { fileUpload } from './../helpers/fileUpload';
@@ -138,10 +138,51 @@ export const startUploading = (file: File) => {
             (note as INote).imageUrl = fileUrl;
             dispatch(startSaveNote(note));
             Swal.close();
+            Swal.fire('Saved', 'Archivo subido', 'success');
         } else {
             Swal.close();
             Swal.fire('Error', 'Error al subir el archivo', 'error');
         }
 
     };
-}
+};
+
+
+export const startDeleting = (id: string) => {
+    return async (dispatch: Dispatch<any>, getState: () => RootState) => {
+        const { uid } = getState().auth;
+        try {
+            await db.doc(`${uid}/journal/notes/${id}`).delete();
+            Swal.fire(
+                {
+                    title: 'Deleting...',
+                    text: 'Please wait...',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                    willOpen: () => {
+                        Swal.showLoading();
+                    }
+                }
+            );
+            Swal.close();
+            Swal.fire('Delete', 'Deleted success', 'success');
+            dispatch(deleteNote(id));
+        } catch (error) {
+            console.error(error);
+            Swal.close();
+            Swal.fire('Error', 'Error al borrar el registro', 'error');
+        }
+
+    };
+};
+
+
+
+export const deleteNote = (id: string): IDeleteNoteAction => (
+    {
+        type: NotesActionTypes.deleteNote,
+        payload: {
+            id,
+        },
+    }
+);

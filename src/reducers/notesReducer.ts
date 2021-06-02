@@ -45,12 +45,18 @@ export interface IUpdateNoteAction extends IBasicAction<NotesActionTypes> {
         id: string;
         note: INote;
     };
-};
+}
 
 export interface ICreateNoteAction extends IBasicAction<NotesActionTypes> {
     type: NotesActionTypes.addNewNote;
     payload: INote;
-};
+}
+
+export interface IDeleteNoteAction extends IBasicAction<NotesActionTypes> {
+    type: NotesActionTypes.deleteNote;
+    payload: { id: string };
+}
+
 
 export const notesReducer: Reducer<NotesState, IBasicAction<NotesActionTypes>> = (state: NotesState = initialNoteState, action: IBasicAction<NotesActionTypes>): NotesState => {
 
@@ -94,6 +100,16 @@ export const notesReducer: Reducer<NotesState, IBasicAction<NotesActionTypes>> =
                 notes: updatedNotes,
             };
 
+        case NotesActionTypes.deleteNote:
+            return {
+                ...state,
+                active: null,
+                notes: state
+                    .notes
+                    .filter(
+                        (note) => note.id !== action.payload.id,
+                    ),
+            }
         default:
             break;
     };

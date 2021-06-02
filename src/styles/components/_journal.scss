@@ -54,6 +54,7 @@
     display: flex;
     margin-bottom: 10px;
     overflow: hidden;
+    justify-content: space-between;
     transition: all .3s ease-in-out;
     &:hover{
         background-color: $google-blue;
@@ -66,11 +67,12 @@
 
 .journal__entry-picture{
     height: 100px;
-    width: 200px;
+    width: 150px;
 }
 
 .journal__entry-body{
     padding: 10px;
+    width: 150px;
 }
 .journal__entry-title{
     font-size: 15px;
