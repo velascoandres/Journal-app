@@ -1,3 +1,4 @@
+import { fileUpload } from './../helpers/fileUpload';
 import Swal from 'sweetalert2';
 import { ISetNotesAction, IUpdateNoteAction } from './../reducers/notesReducer';
 import { Dispatch } from 'react';
@@ -96,4 +97,21 @@ export const refreshNote = (id: string, note: INote): IUpdateNoteAction => (
             note,
         },
     }
-)
+);
+
+
+export const startUploading = (file: File) => {
+    return async (dispatch: Dispatch<any>, getState: () => RootState) => {
+        const { active: note } = getState().notes;
+        
+        const fileUrl = await fileUpload(file);
+
+        console.log(fileUrl);
+
+        if (fileUrl){
+            // TODO dispatch
+        } else {
+            // TODO mostrar error
+        }
+    };
+}
