@@ -1,11 +1,12 @@
-import { fileUpload } from './../helpers/fileUpload';
-import Swal from 'sweetalert2';
-import { ISetNotesAction, IUpdateNoteAction } from './../reducers/notesReducer';
 import { Dispatch } from 'react';
+
 import { ThunkAction } from 'redux-thunk';
+import Swal from 'sweetalert2';
+
+import { ICreateNoteAction, ISetNotesAction, IUpdateNoteAction } from './../reducers/notesReducer';
 import { INote, ISelectNoteAction, NotesActionTypes } from '../reducers/notesReducer';
 import { RootState } from '../store/store';
-
+import { fileUpload } from './../helpers/fileUpload';
 import { db } from '../firebase/firebase-config';
 import { loadNotes } from '../helpers/loadNotes';
 
@@ -27,6 +28,11 @@ export const startNewNote = (): ThunkAction<void, RootState, unknown, any> => {
 
         dispatch(
             activeNote(documentRef.id, newNote),
+        );
+
+
+        dispatch(
+            createNote(documentRef.id, newNote),
         );
 
 
@@ -99,19 +105,43 @@ export const refreshNote = (id: string, note: INote): IUpdateNoteAction => (
     }
 );
 
+export const createNote = (id: string, note: INote): ICreateNoteAction => (
+    {
+        type: NotesActionTypes.addNewNote,
+        payload: {
+            id,
+            ...note,
+        },
+    }
+);
+
 
 export const startUploading = (file: File) => {
     return async (dispatch: Dispatch<any>, getState: () => RootState) => {
         const { active: note } = getState().notes;
-        
+
+        Swal.fire(
+            {
+                title: 'Uploading...',
+                text: 'Please wait...',
+                allowOutsideClick: false,
+                showConfirmButton: false,
+                willOpen: () => {
+                    Swal.showLoading();
+                }
+            }
+        );
+
         const fileUrl = await fileUpload(file);
 
-        console.log(fileUrl);
-
-        if (fileUrl){
-            // TODO dispatch
+        if (fileUrl) {
+            (note as INote).imageUrl = fileUrl;
+            dispatch(startSaveNote(note));
+            Swal.close();
         } else {
-            // TODO mostrar error
+            Swal.close();
+            Swal.fire('Error', 'Error al subir el archivo', 'error');
         }
+
     };
 }

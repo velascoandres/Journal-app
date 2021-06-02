@@ -67,7 +67,7 @@ export const NoteScreen: React.FC = () => {
                     note?.imageUrl &&
 
                     <div className="notes__image">
-                        <img src="https://ik.imagekit.io/ikmedia/backlit.jpg" alt="COVER" />
+                        <img src={note?.imageUrl} alt="COVER" />
                     </div>
                 }
 

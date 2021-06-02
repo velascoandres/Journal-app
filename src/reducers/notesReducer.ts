@@ -45,7 +45,12 @@ export interface IUpdateNoteAction extends IBasicAction<NotesActionTypes> {
         id: string;
         note: INote;
     };
-}
+};
+
+export interface ICreateNoteAction extends IBasicAction<NotesActionTypes> {
+    type: NotesActionTypes.addNewNote;
+    payload: INote;
+};
 
 export const notesReducer: Reducer<NotesState, IBasicAction<NotesActionTypes>> = (state: NotesState = initialNoteState, action: IBasicAction<NotesActionTypes>): NotesState => {
 
@@ -62,6 +67,15 @@ export const notesReducer: Reducer<NotesState, IBasicAction<NotesActionTypes>> =
             return {
                 ...state,
                 notes: action.payload,
+            };
+
+        case NotesActionTypes.addNewNote:
+            return {
+                ...state,
+                notes: [
+                    ...state.notes,
+                    action.payload as INote,
+                ],
             };
 
         case NotesActionTypes.updateNote:
