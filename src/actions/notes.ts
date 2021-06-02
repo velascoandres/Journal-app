@@ -3,7 +3,7 @@ import { Dispatch } from 'react';
 import { ThunkAction } from 'redux-thunk';
 import Swal from 'sweetalert2';
 
-import { ICreateNoteAction, ISetNotesAction, IUpdateNoteAction, IDeleteNoteAction } from './../reducers/notesReducer';
+import { ICreateNoteAction, ISetNotesAction, IUpdateNoteAction, IDeleteNoteAction, ICleanNotesAction } from './../reducers/notesReducer';
 import { INote, ISelectNoteAction, NotesActionTypes } from '../reducers/notesReducer';
 import { RootState } from '../store/store';
 import { fileUpload } from './../helpers/fileUpload';
@@ -184,5 +184,11 @@ export const deleteNote = (id: string): IDeleteNoteAction => (
         payload: {
             id,
         },
+    }
+);
+
+export const cleanNotes = (): ICleanNotesAction => (
+    {
+        type: NotesActionTypes.cleanNotes,
     }
 );

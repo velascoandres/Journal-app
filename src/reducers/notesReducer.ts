@@ -58,6 +58,12 @@ export interface IDeleteNoteAction extends IBasicAction<NotesActionTypes> {
 }
 
 
+export interface ICleanNotesAction extends IBasicAction<NotesActionTypes> {
+    type: NotesActionTypes.cleanNotes;
+}
+
+
+
 export const notesReducer: Reducer<NotesState, IBasicAction<NotesActionTypes>> = (state: NotesState = initialNoteState, action: IBasicAction<NotesActionTypes>): NotesState => {
 
     switch (action.type) {
@@ -79,8 +85,8 @@ export const notesReducer: Reducer<NotesState, IBasicAction<NotesActionTypes>> =
             return {
                 ...state,
                 notes: [
-                    ...state.notes,
                     action.payload as INote,
+                    ...state.notes,
                 ],
             };
 
@@ -109,7 +115,13 @@ export const notesReducer: Reducer<NotesState, IBasicAction<NotesActionTypes>> =
                     .filter(
                         (note) => note.id !== action.payload.id,
                     ),
-            }
+            };
+        
+        case NotesActionTypes.cleanNotes:
+            return {
+                ...initialNoteState,
+            };
+
         default:
             break;
     };

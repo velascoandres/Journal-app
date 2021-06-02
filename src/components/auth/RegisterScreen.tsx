@@ -66,6 +66,7 @@ export const RegisterScreen: React.FC = () => {
             <h3 className="auth__title" >Register Screen</h3>
             <form
                 onSubmit={handleSubmit}
+                className="animate__animated animate__fadeIn animate__faster"
             >
                 {
                     msgError &&

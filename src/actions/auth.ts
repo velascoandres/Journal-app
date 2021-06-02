@@ -1,3 +1,4 @@
+import { cleanNotes } from './notes';
 import { Dispatch } from 'react';
 import Swal from 'sweetalert2'
 
@@ -113,6 +114,7 @@ export const startLogout = () => {
             .then(
                 () => {
                     dispatch(logout());
+                    dispatch(cleanNotes());
                 },
             )
             .catch(
