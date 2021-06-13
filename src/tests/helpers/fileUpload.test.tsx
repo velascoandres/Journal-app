@@ -1,4 +1,17 @@
+import cloudinary from 'cloudinary';
+
+
 import { fileUpload } from '../../helpers/fileUpload';
+
+
+cloudinary.v2.config(
+    {
+        cloud_name: 'dcnjl1zlw',
+        api_key: '781532857836899',
+        api_secret: 'A03RfJrSUMfNtWSw--c0vDHMrdg',
+    }
+);
+
 
 describe('Pruebas en fileUpload', () => {
     test('debe de cargar un archivo y retornar el URL', async () => {
@@ -7,18 +20,27 @@ describe('Pruebas en fileUpload', () => {
 
         const file = new File([blob], 'foto.png');
         const url = await fileUpload(file);
-        
+
         expect(typeof url).toBe('string');
-    
+
+
+        // Borrar imagen por ID
+
+        const segments = url!.split('/');
+        const imageId = segments[segments?.length - 1].replace('.png', '');
+
+        const { deleted } = await cloudinary.v2.api.delete_resources([imageId]);
+        expect(deleted).toEqual({ [imageId]: "not_found" });
+
     });
 
     test('debe de retornar un error', async () => {
 
         const file = new File([], 'foto.png');
         const url = await fileUpload(file);
-        
+
         expect(url).toBe(undefined);
-    
+
     });
-    
+
 });
