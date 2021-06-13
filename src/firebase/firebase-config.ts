@@ -18,8 +18,17 @@ firebase.analytics();
 
 const db = firebase.firestore();
 const googleAuthProvider = new firebase.auth.GoogleAuthProvider();
+const auth = firebase.auth;
 
-export  {
+
+// eslint-disable-next-line no-restricted-globals
+if (location.hostname === 'localhost') {
+    db.useEmulator('localhost', 8080);
+    auth().useEmulator('http://localhost:9099/');
+}
+
+
+export {
     db,
     googleAuthProvider,
     firebase,
