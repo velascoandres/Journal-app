@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAppSelector } from '../../hooks/selectors';
-import { NotesState } from '../../reducers/notesReducer';
+import { INote, NotesState } from '../../reducers/notesReducer';
 import { JournalEntry } from './JournalEntry';
 
 export const JournalEntries: React.FC = () => {
@@ -11,9 +11,9 @@ export const JournalEntries: React.FC = () => {
         <div className="journal__entries">
             {
                 notes.map(
-                    note => (
+                    (note: INote, index: number) => (
                         <JournalEntry
-                            key={note.id}
+                            key={note.id || index}
                             {...note}
                         />
                     )
