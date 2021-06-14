@@ -1,5 +1,5 @@
 import configureStore from 'redux-mock-store' //ES6 modules
-import { deleteNote, startDeleting, startNewNote } from '../../actions/notes';
+import { startNewNote } from '../../actions/notes';
 import { NotesActionTypes } from '../../reducers/notesReducer';
 
 import thunk from 'redux-thunk';
