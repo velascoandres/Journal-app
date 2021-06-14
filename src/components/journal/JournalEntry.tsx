@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useMemo } from 'react'
 import { INote } from '../../reducers/notesReducer';
 import moment from 'moment';
 import { useAppDispatch } from '../../hooks/selectors';
@@ -14,8 +14,21 @@ export const JournalEntry: React.FC<INote> = ({ id, title, body, date, imageUrl 
 
 
     const handleSelect = () => {
-        dispatch(activeNote(id as string, { title, body, date, imageUrl }));
+        dispatch(activeNote(id as string, { title, body, date: date ?? 0, imageUrl: imageUrl ?? '' }));
     };
+
+    const limitBody = (body: string): string => {
+        const limit = 100;
+        const isLimit = body.split('').length >= limit;
+        if (isLimit) {
+            return body.substring(0, limit - 5).trim() + '.....';
+        }
+        return body;
+    };
+
+    const limitedBody = useMemo(
+        () => limitBody(body), [body]
+    );
 
     return (
         <div
@@ -42,7 +55,7 @@ export const JournalEntry: React.FC<INote> = ({ id, title, body, date, imageUrl 
                     {title}
                 </p>
                 <p className="journal__entry-content">
-                    {body}
+                    {limitedBody}
                 </p>
             </div>
 

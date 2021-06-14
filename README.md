@@ -26,3 +26,54 @@ Create two files named as : `.env.test` and `.env.development` with the followin
     REACT_APP_MEASUREMENT_ID=
 ```
 
+## Screenshots
+
+
+### Login Screen
+
+<p align="center">
+    <img 
+        src="https://raw.githubusercontent.com/velascoandres/music_player/main/demo/screenshot.png"
+        alt="screenshot"
+        width="220"
+        height="420"
+    />
+</p>
+
+
+### Register Screen
+
+<p align="center">
+    <img 
+        src="https://raw.githubusercontent.com/velascoandres/Journal-app/main/screenshots/register.png"
+        alt="screenshot"
+        width="220"
+        height="420"
+    />
+</p>
+
+
+
+### Home Screen
+
+<p align="center">
+    <img 
+        src="https://raw.githubusercontent.com/velascoandres/Journal-app/main/screenshots/login.png"
+        alt="screenshot"
+        width="220"
+        height="420"
+    />
+</p>
+
+
+
+### Demo
+
+<p align="center">
+    <img 
+        src="https://raw.githubusercontent.com/velascoandres/Journal-app/main/screenshots/demo.gif"
+        alt="screenshot"
+        width="220"
+        height="420"
+    />
+</p>
