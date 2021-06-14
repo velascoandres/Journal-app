@@ -621,3 +621,5 @@ Jun 14, 2021 1:11:31 PM io.gapi.emulators.netty.HttpVersionRoutingHandler channe
 INFO: Detected non-HTTP/2 connection.
 Jun 14, 2021 1:11:31 PM com.google.cloud.datastore.emulator.firestore.webchannel.FirestoreV1WebChannelAdapter$FirestoreWriteHandler onClose
 INFO: channel closed
+*** shutting down gRPC server since JVM is shutting down
+*** server shut down
