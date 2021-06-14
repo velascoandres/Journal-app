@@ -33,10 +33,10 @@ Create two files named as : `.env.test` and `.env.development` with the followin
 
 <p align="center">
     <img 
-        src="https://raw.githubusercontent.com/velascoandres/music_player/main/demo/screenshot.png"
+        src="https://raw.githubusercontent.com/velascoandres/Journal-app/main/screenshots/login.png"
         alt="screenshot"
-        width="220"
-        height="420"
+        width="520"
+        height="320"
     />
 </p>
 
@@ -47,8 +47,8 @@ Create two files named as : `.env.test` and `.env.development` with the followin
     <img 
         src="https://raw.githubusercontent.com/velascoandres/Journal-app/main/screenshots/register.png"
         alt="screenshot"
-        width="220"
-        height="420"
+        width="520"
+        height="320"
     />
 </p>
 
@@ -58,10 +58,10 @@ Create two files named as : `.env.test` and `.env.development` with the followin
 
 <p align="center">
     <img 
-        src="https://raw.githubusercontent.com/velascoandres/Journal-app/main/screenshots/login.png"
+        src="https://raw.githubusercontent.com/velascoandres/Journal-app/main/screenshots/home.png"
         alt="screenshot"
-        width="220"
-        height="420"
+        width="520"
+        height="320"
     />
 </p>
 
@@ -73,7 +73,7 @@ Create two files named as : `.env.test` and `.env.development` with the followin
     <img 
         src="https://raw.githubusercontent.com/velascoandres/Journal-app/main/screenshots/demo.gif"
         alt="screenshot"
-        width="220"
-        height="420"
+        width="520"
+        height="320"
     />
 </p>
